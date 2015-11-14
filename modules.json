@@ -1,0 +1,17 @@
+{
+  "clownface": "clownface",
+  "mimeTypeUtil": "rdf-mime-type-util",
+  "rdf": "rdf-ext",
+  "InMemoryStore": "rdf-store-inmemory",
+  "JsonLdParser": "rdf-parser-jsonld",
+  "JsonLdSerializer": "rdf-serializer-jsonld",
+  "LdpStore": "rdf-store-ldp",
+  "MicrodataParser": "rdf-parser-microdata",
+  "N3Parser": "rdf-parser-n3",
+  "N3Serializer": "rdf-serializer-n3",
+  "NTriplesSerializer": "rdf-serializer-ntriples",
+  "RdfXmlParser": "rdf-parser-rdfxml",
+  "SingleGraphStore": "rdf-store-singlegraph",
+  "SparqlStore": "rdf-store-sparql",
+  "SparqlUpdateSerializer": "rdf-serializer-sparql-update"
+}

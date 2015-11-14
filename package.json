@@ -1,0 +1,53 @@
+{
+  "name": "rdf-ext-dist-builder",
+  "version": "0.1.0",
+  "description": "Configurable RDF-Ext distribution builder",
+  "main": "index.js",
+  "scripts": {
+    "install": "node install.js",
+    "lint": "standard",
+    "test": "node_modules/.bin/mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rdf-ext/rdf-ext-dist-builder.git"
+  },
+  "keywords": [
+    "rdf-parser",
+    "rdf",
+    "linked",
+    "data"
+  ],
+  "author": "Thomas Bergwinkl <bergi@axolotlfarm.org> (https://www.bergnet.org/people/bergi/card#me)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rdf-ext/rdf-ext-dist-builder/issues"
+  },
+  "homepage": "https://github.com/rdf-ext/rdf-ext-dist-builder",
+  "dependencies": {
+    "bluebird": "^2.10.2",
+    "bootstrap": "^3.3.5",
+    "browserify": "^11.2.0",
+    "clownface": "^0.3.0-rc2",
+    "exorcist": "^0.4.0",
+    "express": "^4.13.3",
+    "jquery": "^2.1.4",
+    "lodash": "^3.10.1",
+    "rdf-ext": "^0.3.0-rc1",
+    "rdf-mime-type-util": "^0.3.0-rc2",
+    "rdf-parser-jsonld": "^0.3.0-rc2",
+    "rdf-parser-microdata": "^0.3.0-rc1",
+    "rdf-parser-n3": "^0.3.0-rc1",
+    "rdf-parser-rdfxml": "^0.3.0-rc1",
+    "rdf-serializer-jsonld": "^0.3.0-rc2",
+    "rdf-serializer-n3": "^0.3.0-rc1",
+    "rdf-serializer-ntriples": "^0.3.0-rc1",
+    "rdf-serializer-sparql-update": "^0.3.0-rc1",
+    "rdf-store-inmemory": "^0.3.0-rc1",
+    "rdf-store-ldp": "^0.3.0-rc1",
+    "rdf-store-sparql": "^0.3.0-rc1",
+    "rdf-store-singlegraph": "^0.3.0-rc1",
+    "tmp": "^0.0.28",
+    "uglify-js": "^2.4.24 "
+  }
+}

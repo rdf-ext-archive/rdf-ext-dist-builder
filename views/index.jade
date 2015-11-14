@@ -1,0 +1,28 @@
+html(lang='en')
+    head
+        meta(charset='utf-8')
+        meta(http-equiv='X-UA-Compatible',content='IE=edge')
+        meta(name='viewport',content='width=device-width,initial-scale=1')
+
+        title RDF-Ext distribution builder
+
+        // bootstrap
+        link(href='css/bootstrap.css',rel='stylesheet')
+
+    body
+        .container
+            .row
+                .col-lg-offset-3.col-lg-6
+                    h3 Build your own custom RDF-Ext distribution:
+
+                    form(action='/',method='post')
+                        each module, name in modules
+                            .checkbox
+                                label
+                                    input(type='checkbox',name=module.module)
+                                    = module.description
+                        .pull-right
+                            button(type='submit').btn.btn-default build
+
+        script(src='js/jquery.js')
+        script(src='js/bootstrap.js')
