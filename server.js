@@ -2,17 +2,21 @@ var _ = require('lodash')
 var bodyParser = require('body-parser')
 var distBuilder = require('./index')
 var express = require('express')
+var fs = require('fs')
+var serveIndex = require('serve-index')
 
 var app = express()
 
 app.set('view engine', 'jade')
 app.set('views', './views')
 
+app.locals.modules = distBuilder.availableModules()
+
 app.use(express.static('public'))
 app.use(bodyParser.urlencoded({extended:false}))
 
 app.get('/', function (req, res) {
-  res.render('index', { modules: distBuilder.availableModules() })
+  res.render('index')
 })
 
 app.post('/', function (req, res, next) {
@@ -31,6 +35,11 @@ app.post('/', function (req, res, next) {
     next(error)
   })
 })
+
+if (fs.existsSync('public/dist')) {
+  app.locals.dist = true
+  app.use('/dist', serveIndex('public/dist'))
+}
 
 var server = app.listen(3000, function () {
   var host = server.address().address

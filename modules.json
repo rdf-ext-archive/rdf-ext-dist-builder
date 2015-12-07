@@ -2,6 +2,7 @@
   "clownface": "clownface",
   "mimeTypeUtil": "rdf-mime-type-util",
   "rdf": "rdf-ext",
+  "simple": "simplerdf",
   "InMemoryStore": "rdf-store-inmemory",
   "JsonLdParser": "rdf-parser-jsonld",
   "JsonLdSerializer": "rdf-serializer-jsonld",

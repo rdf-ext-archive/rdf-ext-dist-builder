@@ -10,19 +10,35 @@ html(lang='en')
         link(href='css/bootstrap.css',rel='stylesheet')
 
     body
-        .container
+        div(style='margin-top:20px;').container
             .row
-                .col-lg-offset-3.col-lg-6
-                    h3 Build your own custom RDF-Ext distribution:
+                .col-lg-1
+                    img(src='/images/logo.png', style='width:150px;').img-rounded
 
-                    form(action='/',method='post')
-                        each module, name in modules
-                            .checkbox
-                                label
-                                    input(type='checkbox',name=module.module)
-                                    = module.description
-                        .pull-right
-                            button(type='submit').btn.btn-default build
+                .col-lg-offset-2.col-lg-6
+
+                    if dist
+                        .row
+                                h3 Prebuilt distributions:
+
+                                p
+                                    a(href='/dist/rdf-ext-all-latest.js') latest version
+                                p
+                                    a(href='/dist/rdf-ext-all-latest.min.js') latest version minified
+                                p
+                                    a(href='/dist/') all files
+
+                    .row
+                            h3 Build your own custom RDF-Ext distribution:
+
+                            form(action='/',method='post')
+                                each module, name in modules
+                                    .checkbox
+                                        label
+                                            input(type='checkbox',name=module.module)
+                                            = module.description
+                                .pull-right
+                                    button(type='submit').btn.btn-default build
 
         script(src='js/jquery.js')
         script(src='js/bootstrap.js')

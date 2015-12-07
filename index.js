@@ -5,14 +5,14 @@ var path = require('path')
 var tmp = require('tmp')
 
 function availableModules (filter) {
-  var modules = JSON.parse(fs.readFileSync('./modules.json').toString())
+  var modules = JSON.parse(fs.readFileSync(path.join(__dirname, './modules.json')).toString())
 
   return Object.keys(modules).reduce(function (output, name) {
     if (filter && filter.indexOf(modules[name]) === -1) {
       return output
     }
 
-    var package = JSON.parse(fs.readFileSync('./node_modules/' + modules[name] + '/package.json').toString())
+    var package = JSON.parse(fs.readFileSync(path.join(__dirname, './node_modules/' + modules[name] + '/package.json')).toString())
 
     output[name] = {
       module: modules[name],
@@ -24,15 +24,21 @@ function availableModules (filter) {
 }
 
 function buildEntryFile (filename, modules) {
-  var content = 'module.exports = {\n'
+  var content = 'var bundle = {\n'
 
   modules = availableModules(modules)
 
   content += Object.keys(modules).map(function (name) {
-      return '  ' + name + ': require(\'' + modules[name].module + '\')'
-    }).join(',\n')
+    return '  ' + name + ': require(\'' + modules[name].module + '\')'
+  }).join(',\n')
 
   content += '}\n'
+
+  // CommonJS interface
+  content += 'module.exports = bundle\n'
+
+  // attach to window
+  content += 'if (window) { Object.keys(bundle).forEach(function (key) { window[key] = bundle[key] })}\n'
 
   return bluebird.promisify(fs.writeFile)(filename, content)
 }
@@ -66,7 +72,7 @@ function build(options) {
     return buildEntryFile(options.entryFilename, options.modules).then(function () {
       return buildBundle(options.entryFilename, {
         debug: options.sourceMap,
-        paths: [path.join(process.cwd(), 'node_modules')]
+        paths: [path.join(__dirname, 'node_modules')]
       })
     }).then(function (bundle) {
       result.bundle = bundle
