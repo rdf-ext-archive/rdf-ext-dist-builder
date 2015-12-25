@@ -19,7 +19,6 @@ function createModuleSymlink (module, src, dst) {
   createSymlink(path.join(path.dirname(require.resolve(module)), src), dst)
 }
 
-createDirectory('./public')
 createDirectory('./public/css')
 createDirectory('./public/fonts')
 createDirectory('./public/js')

@@ -1,2 +1,5 @@
 node_modules
-public
+public/css
+public/dist
+public/fonts
+public/js
