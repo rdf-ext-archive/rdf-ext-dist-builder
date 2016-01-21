@@ -1,6 +1,6 @@
 {
   "clownface": "clownface",
-  "mimeTypeUtil": "rdf-mime-type-util",
+  "commonFormats": "rdf-formats-common",
   "rdf": "rdf-ext",
   "simple": "simplerdf",
   "InMemoryStore": "rdf-store-inmemory",
