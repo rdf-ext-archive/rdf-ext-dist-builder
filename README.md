@@ -6,12 +6,12 @@ Configurable RDF-Ext distribution builder
 
 ### Build Distribution
 
-The build script is available with the following options
+The build script is available with the following options:
 
--o, --output <file>,                        write distribution to this file
--l, --list,                                 list available modules
--m, --modules <comma-separated-modules>,    included modules.  if argument is omitted, includes all modules by default.
--d, --debug,                                add source map to distribution
+* `-o`, `--output <file>`,                        write distribution to this file
+* `-l`, `--list`,                                 list available modules
+* `-m`, `--modules <comma-separated-modules>`,    included modules.  if argument is omitted, includes all modules by default.
+* `-d`, `--debug`,                                add source map to distribution
 
 ```bash
 # create a distribution bundling all modules
