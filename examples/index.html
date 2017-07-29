@@ -1,0 +1,32 @@
+<html>
+  <script src="rdf-ext.dist.js"></script>
+<body>
+ <pre id="out">
+ </pre>
+
+ <script>
+   function escapeHtml(str) {
+     return str
+       .replace(/&/g, '&amp;')
+       .replace(/</g, '&lt;')
+       .replace(/>/g, '&gt;')
+       .replace(/"/g, '&quot;')
+       .replace(/'/g, '&#039;')
+   }
+
+   var dataset = rdf.dataset()
+
+   dataset.add(rdf.quad(
+     rdf.namedNode('http://example.org/subject'),
+     rdf.namedNode('http://example.org/predicate'),
+     rdf.namedNode('http://example.org/object')
+   ))
+
+   var stream = (new NTriplesSerializer()).import(dataset.toStream())
+
+   stream.on('data', (data) => {
+     document.getElementById('out').innerHTML += escapeHtml(data.toString())
+   })
+ </script>
+</body>
+</html>
