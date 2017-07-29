@@ -1,18 +1,16 @@
 {
-  "clownface": "clownface",
   "commonFormats": "rdf-formats-common",
   "rdf": "rdf-ext",
-  "simple": "simplerdf",
-  "InMemoryStore": "rdf-store-inmemory",
+  "rdfFetch": "rdf-fetch",
+  "DatasetStore": "rdf-store-dataset",
+  "FilterStream": "rdf-stream-filter",
   "JsonLdParser": "rdf-parser-jsonld",
-  "JsonLdSerializer": "rdf-serializer-jsonld",
-  "LdpStore": "rdf-store-ldp",
-  "MicrodataParser": "rdf-parser-microdata",
+  "JsonLdSerializer": "rdf-serializer-jsonld-ext",
   "N3Parser": "rdf-parser-n3",
-  "N3Serializer": "rdf-serializer-n3",
   "NTriplesSerializer": "rdf-serializer-ntriples",
-  "RdfXmlParser": "rdf-parser-rdfxml",
-  "SingleGraphStore": "rdf-store-singlegraph",
+  "Sink": "rdf-sink",
+  "Source": "rdf-source",
   "SparqlStore": "rdf-store-sparql",
-  "SparqlUpdateSerializer": "rdf-serializer-sparql-update"
+  "TripleToQuadTransform": "rdf-transform-triple-to-quad",
+  "WebStore": "rdf-store-web"
 }
