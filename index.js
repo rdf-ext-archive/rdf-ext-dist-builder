@@ -63,8 +63,6 @@ function build(options) {
   options.sourceMap = 'sourceMap' in options ? !!options.sourceMap : true
 
   return bluebird.promisify(tmp.dir)().then(function (folder) {
-    folder = folder[0]
-
     options.entryFilename = path.join(folder, options.entryFilename)
 
     var result = {}
