@@ -22,7 +22,7 @@ mv $DIST_MIN_MAP public/dist
 rm public/dist/$BUNDLE-latest.js
 rm public/dist/$BUNDLE-latest.js.map
 rm public/dist/$BUNDLE-latest.min.js
-rm public/dist/$BUNDLE-latest.min.js.ap
+rm public/dist/$BUNDLE-latest.min.js.map
 ln -s $DIST public/dist/$BUNDLE-latest.js
 ln -s $DIST_MAP public/dist/$BUNDLE-latest.js.map
 ln -s $DIST_MIN public/dist/$BUNDLE-latest.min.js
