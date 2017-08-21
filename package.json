@@ -51,8 +51,10 @@
     "rdf-store-sparql": "^1.0.0",
     "rdf-store-web": "^1.0.0",
     "rdf-stream-filter": "^1.0.0",
-    "rdf-transform-triple-to-quad": "^1.0.0",
+    "rdf-transform-triple-to-quad": "^1.0.1",
+    "readable-stream": "^2.3.3",
     "serve-index": "^1.7.2",
+    "string-to-stream": "^1.1.0",
     "tmp": "^0.0.33",
     "uglify-js": "^3.0.27"
   }
