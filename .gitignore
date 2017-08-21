@@ -1,5 +1,6 @@
 examples/rdf-ext.dist.js
 node_modules
+package-lock.json
 public/css
 public/dist
 public/fonts
