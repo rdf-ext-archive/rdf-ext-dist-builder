@@ -49,8 +49,21 @@ function buildEntryFile (filename, modules) {
   return bluebird.promisify(fs.writeFile)(filename, content)
 }
 
-function buildBundle (entryFilename, browserifyOptions) {
+function buildBundle (entryFilename, options) {
+  var browserifyOptions = {
+    basedir: __dirname,
+    debug: options.sourceMap,
+    paths: [__dirname, path.join(__dirname, 'node_modules')]
+  }
+
   var bundle = browserify(entryFilename, browserifyOptions)
+
+  if (options.es5) {
+    bundle.transform('babelify', {
+      global: true,
+      presets: [require('babel-preset-es2015')]
+    })
+  }
 
   return new Promise(function (resolve, reject) {
     bundle.bundle(function (error, built) {
@@ -67,6 +80,7 @@ function build(options) {
   options = options || {}
   options.entryFilename = options.entryFilename || 'rdf-ext.js'
   options.sourceMap = 'sourceMap' in options ? !!options.sourceMap : true
+  options.es5 = 'es5' in options ? !!options.es5 : true
 
   return bluebird.promisify(tmp.dir)().then(function (folder) {
     options.entryFilename = path.join(folder, options.entryFilename)
@@ -74,10 +88,7 @@ function build(options) {
     var result = {}
 
     return buildEntryFile(options.entryFilename, options.modules).then(function () {
-      return buildBundle(options.entryFilename, {
-        debug: options.sourceMap,
-        paths: [__dirname, path.join(__dirname, 'node_modules')]
-      })
+      return buildBundle(options.entryFilename, options)
     }).then(function (bundle) {
       result.bundle = bundle
 

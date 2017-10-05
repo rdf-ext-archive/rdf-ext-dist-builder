@@ -11,7 +11,8 @@ function buildDistribution () {
   var options = {
     outputFilename: program.output || 'rdf-ext-' + version + '.js',
     modules: program.modules ? program.modules.split(',') : _.map(distBuilder.availableModules(), 'module'),
-    sourceMap: !!program.debug
+    sourceMap: !!program.debug,
+    es5: !program.es2015
   }
 
   distBuilder.build(options).then(function (result) {
@@ -40,6 +41,7 @@ program
   .option('-l, --list', 'list available modules')
   .option('-m, --modules <modules>', 'only include specified modules')
   .option('-d, --debug', 'add source map to distribution')
+  .option('-6, --es2015', 'output ES2015 code')
   .parse(process.argv)
 
 if (program.list) {
