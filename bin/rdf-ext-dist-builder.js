@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+
 var _ = require('lodash')
 var distBuilder = require('../index')
 var fs = require('fs')

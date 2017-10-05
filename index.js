@@ -4,6 +4,16 @@ var fs = require('fs')
 var path = require('path')
 var tmp = require('tmp')
 
+function moduleInfo (key) {
+  var package = JSON.parse(fs.readFileSync(path.join(__dirname, './node_modules/' + key + '/package.json')).toString())
+
+  return {
+    module: key,
+    description: package.description,
+    version: package.version
+  }
+}
+
 function availableModules (filter) {
   var modules = JSON.parse(fs.readFileSync(path.join(__dirname, './modules.json')).toString())
 
@@ -12,12 +22,7 @@ function availableModules (filter) {
       return output
     }
 
-    var package = JSON.parse(fs.readFileSync(path.join(__dirname, './node_modules/' + modules[name] + '/package.json')).toString())
-
-    output[name] = {
-      module: modules[name],
-      description: package.description
-    }
+    output[name] = moduleInfo(modules[name])
 
     return output
   }, {})
@@ -103,5 +108,6 @@ function build(options) {
 
 module.exports = {
   availableModules: availableModules,
-  build: build
+  build: build,
+  moduleInfo: moduleInfo
 }
