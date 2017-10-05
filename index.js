@@ -24,7 +24,13 @@ function availableModules (filter) {
 }
 
 function buildEntryFile (filename, modules) {
-  var content = 'var bundle = {\n'
+  var content = ''
+
+  // always load head before any other modules
+  content += 'require(\'lib/head\')\n'
+
+  // modules bundle
+  content += 'var bundle = {\n'
 
   modules = availableModules(modules)
 
@@ -70,7 +76,7 @@ function build(options) {
     return buildEntryFile(options.entryFilename, options.modules).then(function () {
       return buildBundle(options.entryFilename, {
         debug: options.sourceMap,
-        paths: [path.join(__dirname, 'node_modules')]
+        paths: [__dirname, path.join(__dirname, 'node_modules')]
       })
     }).then(function (bundle) {
       result.bundle = bundle
