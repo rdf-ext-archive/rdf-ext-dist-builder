@@ -1,0 +1,7 @@
+{
+  "apps" : [{
+    "name": "rdf-ext-dist-builder",
+    "cwd": "/srv",
+    "script": "server.js"
+  }]
+}

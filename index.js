@@ -1,23 +1,33 @@
-var bluebird = require('bluebird')
-var browserify = require('browserify')
-var fs = require('fs')
-var path = require('path')
-var tmp = require('tmp')
+const bluebird = require('bluebird')
+const browserify = require('browserify')
+const fs = require('fs')
+const path = require('path')
+const tmp = require('tmp')
+
+function distBuilderInfo () {
+  const packageInfo = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json')).toString())
+
+  return {
+    module: 'rdf-ext-dist-builder',
+    description: packageInfo.description,
+    version: packageInfo.version
+  }
+}
 
 function moduleInfo (key) {
-  var package = JSON.parse(fs.readFileSync(path.join(__dirname, './node_modules/' + key + '/package.json')).toString())
+  const packageInfo = JSON.parse(fs.readFileSync(path.join(__dirname, './node_modules/' + key + '/package.json')).toString())
 
   return {
     module: key,
-    description: package.description,
-    version: package.version
+    description: packageInfo.description,
+    version: packageInfo.version
   }
 }
 
 function availableModules (filter) {
-  var modules = JSON.parse(fs.readFileSync(path.join(__dirname, './modules.json')).toString())
+  const modules = JSON.parse(fs.readFileSync(path.join(__dirname, './modules.json')).toString())
 
-  return Object.keys(modules).reduce(function (output, name) {
+  return Object.keys(modules).reduce((output, name) => {
     if (filter && filter.indexOf(modules[name]) === -1) {
       return output
     }
@@ -29,7 +39,7 @@ function availableModules (filter) {
 }
 
 function buildEntryFile (filename, modules) {
-  var content = ''
+  let content = ''
 
   // always load head before any other modules
   content += 'require(\'lib/head\')\n'
@@ -39,7 +49,7 @@ function buildEntryFile (filename, modules) {
 
   modules = availableModules(modules)
 
-  content += Object.keys(modules).map(function (name) {
+  content += Object.keys(modules).map((name) => {
     return '  ' + name + ': require(\'' + modules[name].module + '\')'
   }).join(',\n')
 
@@ -55,13 +65,13 @@ function buildEntryFile (filename, modules) {
 }
 
 function buildBundle (entryFilename, options) {
-  var browserifyOptions = {
+  const browserifyOptions = {
     basedir: __dirname,
     debug: options.sourceMap,
     paths: [__dirname, path.join(__dirname, 'node_modules')]
   }
 
-  var bundle = browserify(entryFilename, browserifyOptions)
+  const bundle = browserify(entryFilename, browserifyOptions)
 
   if (options.es5) {
     bundle.transform('babelify', {
@@ -70,10 +80,10 @@ function buildBundle (entryFilename, options) {
     })
   }
 
-  return new Promise(function (resolve, reject) {
-    bundle.bundle(function (error, built) {
-      if (error) {
-        reject(error)
+  return new Promise((resolve, reject) => {
+    bundle.bundle((err, built) => {
+      if (err) {
+        reject(err)
       } else {
         resolve(built)
       }
@@ -81,26 +91,26 @@ function buildBundle (entryFilename, options) {
   })
 }
 
-function build(options) {
+function build (options) {
   options = options || {}
   options.entryFilename = options.entryFilename || 'rdf-ext.js'
   options.sourceMap = 'sourceMap' in options ? !!options.sourceMap : true
   options.es5 = 'es5' in options ? !!options.es5 : true
 
-  return bluebird.promisify(tmp.dir)().then(function (folder) {
+  return bluebird.promisify(tmp.dir)().then((folder) => {
     options.entryFilename = path.join(folder, options.entryFilename)
 
-    var result = {}
+    const result = {}
 
-    return buildEntryFile(options.entryFilename, options.modules).then(function () {
+    return buildEntryFile(options.entryFilename, options.modules).then(() => {
       return buildBundle(options.entryFilename, options)
-    }).then(function (bundle) {
+    }).then((bundle) => {
       result.bundle = bundle
 
       return bluebird.promisify(fs.unlink)(options.entryFilename)
-    }).then(function () {
+    }).then(() => {
       return bluebird.promisify(fs.rmdir)(folder)
-    }).then(function () {
+    }).then(() => {
       return result
     })
   })
@@ -108,6 +118,7 @@ function build(options) {
 
 module.exports = {
   availableModules: availableModules,
+  distBuilderInfo: distBuilderInfo,
   build: build,
   moduleInfo: moduleInfo
 }

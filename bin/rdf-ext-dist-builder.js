@@ -1,37 +1,37 @@
 #!/usr/bin/env node
 
-var _ = require('lodash')
-var distBuilder = require('../index')
-var fs = require('fs')
-var path = require('path')
-var program = require('commander')
+const _ = require('lodash')
+const distBuilder = require('../index')
+const fs = require('fs')
+const path = require('path')
+const program = require('commander')
 
-var version = JSON.parse(fs.readFileSync(path.join(__dirname, '../package.json')).toString()).version
+const version = JSON.parse(fs.readFileSync(path.join(__dirname, '../package.json')).toString()).version
 
 function buildDistribution () {
-  var options = {
+  const options = {
     outputFilename: program.output || 'rdf-ext-' + version + '.js',
     modules: program.modules ? program.modules.split(',') : _.map(distBuilder.availableModules(), 'module'),
     sourceMap: !!program.debug,
     es5: !program.es2015
   }
 
-  distBuilder.build(options).then(function (result) {
-   console.log('created distribution: ' + Math.floor(result.bundle.length / 1024 + 0.5) + 'kb')
+  distBuilder.build(options).then((result) => {
+    console.log('created distribution: ' + Math.floor(result.bundle.length / 1024 + 0.5) + 'kb')
 
-   fs.writeFileSync(options.outputFilename, result.bundle)
- }).catch(function (error) {
-   console.error('error durring build process:')
-   console.error(error.stack || error.message)
- })
+    fs.writeFileSync(options.outputFilename, result.bundle)
+  }).catch((err) => {
+    console.error('error durring build process:')
+    console.error(err.stack || err.message)
+  })
 }
 
-function listModules() {
-  var modules = distBuilder.availableModules()
+function listModules () {
+  const modules = distBuilder.availableModules()
 
   process.stdout.write('available modules:\n')
 
-  _.keys(modules).forEach(function (key) {
+  _.keys(modules).forEach((key) => {
     process.stdout.write('\t' + modules[key].module + ': ' + modules[key].description + '\n')
   })
 }
@@ -46,9 +46,7 @@ program
   .parse(process.argv)
 
 if (program.list) {
-  return listModules()
+  listModules()
 } else {
-  return buildDistribution()
+  buildDistribution()
 }
-
-
