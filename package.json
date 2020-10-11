@@ -35,7 +35,7 @@
     "express": "^4.13.3",
     "jade": "^1.11.0",
     "jquery": "^2.1.4",
-    "lodash": "^3.10.1",
+    "lodash": "^4.17.20",
     "rdf-ext": "^0.3.0",
     "rdf-formats-common": "^0.3.0",
     "rdf-parser-jsonld": "^0.3.0",
